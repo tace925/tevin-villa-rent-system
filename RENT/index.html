@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEVIN'S VILLA – Modern Apartments Nairobi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+<header class="hero">
+    <h1>TEVIN'S VILLA</h1>
+    <p>Modern • Secure • Smart living in Nairobi</p>
+    <div class="hero-buttons">
+        <a href="dashboard.html" class="btn btn-primary">Manager Dashboard</a>
+        <a href="about.html" class="btn btn-secondary">Learn More</a>
+    </div>
+</header>
+
+<div class="container" style="padding: 5rem 0;">
+    <h2 style="text-align:center; margin-bottom:3rem; color:white;">Why Residents Choose TEVIN'S VILLA</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2rem;">
+        <div class="card">
+            <h3>24/7 Security</h3>
+            <p>Gated community, CCTV, electric fence, security guards</p>
+        </div>
+        <div class="card">
+            <h3>Reliable Utilities</h3>
+            <p>Consistent water, backup generator, fast internet ready</p>
+        </div>
+        <div class="card">
+            <h3>Smart Rent System</h3>
+            <p>M-Pesa integration, auto reminders, transparent ledger</p>
+        </div>
+        <div class="card">
+            <h3>Green & Quiet</h3>
+            <p>Beautiful gardens, children's play area, peaceful environment</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>TEVIN VILLA</h4>
+            <p>Quality apartments • Smart management • Happy living</p>
+            <p>Nairobi, Kenya</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="tenants.html">Tenants</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact</h4>
+            <p>+254 797 510 552</p>
+            <p>tevinmulinge48gmail.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <img src="images/TevinMulinge.jpg" alt="Tevin" class="developer-photo">
+        <p>© 2025 TEVIN VILLA Apartments. Developed by Tevin Mulinge</p>
+    </div>
+</footer>
+<script>
+    // Mobile: click "Help & Info" to toggle dropdown
+    document.querySelectorAll('.dropdown > a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (window.innerWidth <= 992) {     // only on mobile/tablet
+                e.preventDefault();             // stop navigation
+                this.parentElement.classList.toggle('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>
