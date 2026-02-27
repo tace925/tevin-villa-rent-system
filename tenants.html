@@ -1,242 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tenants - TEVIN VILLA</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="supabase-js.min.js"></script>
-    <style>
-        .photo-preview { width:80px; height:80px; object-fit:cover; border-radius:8px; border:2px solid #e5e7eb; }
-        .photo-cell { width:90px; text-align:center; }
-        .photo-upload-box { text-align:center; margin:1.5rem 0; }
-        .photo-upload-box img { max-width:140px; border-radius:10px; margin-top:0.8rem; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tevin,s Villa - Tenants</title>
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="tenants.css">
+  <!-- Remove type="module" and use this instead -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="js/tenants-simple.js"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
 
-<nav class="navbar">
-    <div class="nav-brand">TEVIN VILLA</div>
-
-    <div class="navbar-right">
-        
-        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
+  <!-- Navbar -->
+  <nav class="bg-gray-950 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <div class="text-purple-500 font-bold text-xl">TEVIN'S VILLA</div>
+        </div>
+        <div class="flex space-x-8">
+          <a href="index.html" class="hover:text-purple-400">Home</a>
+          <a href="dashboard.html" class="hover:text-purple-400">Dashboard</a>
+          <a href="tenants.html" class="text-purple-400 border-b-2 border-purple-500">Tenants</a>
+          <a href="payment.html" class="hover:text-purple-400">Payments</a>
+          <a href="help.html" class="hover:text-purple-400">Help & Info</a>
+        </div>
+      </div>
     </div>
+  </nav>
 
-    <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="tenants.html" class="active">Tenants</a></li>
-        <li><a href="payment.html">Payments</a></li>  <!-- This connects to payments.html -->
-        <li class="dropdown">
-            <a href="#">Help & Info</a>
-            <div class="dropdown-content">
-                <a href="about.html">About TEVIN VILLA</a>
-                <a href="#faq">Tenant FAQ</a>
-                <a href="#contact">Contact Us</a>
-            </div>
-        </li>
-    </ul>
-</nav>
-
-<div class="container" style="padding:3rem 1rem;">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:2rem;">
-        <h1 style="color:white;">Tenant Management</h1>
-        <button class="btn btn-primary" onclick="document.getElementById('addTenantModal').style.display='block'">
-            + Add Tenant
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Tenants Management</h2>
+        <button id="refreshBtn" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm flex items-center gap-2">
+          <i class="fas fa-sync-alt"></i> Refresh
         </button>
-    </div>
+      </div>
+      <p class="text-gray-400 text-sm mb-6">
+        Tenant list & photo upload functionality (Local Storage)
+      </p>
 
-    <!-- Tenant list would go here – basic placeholder for now -->
-    <div class="card" style="min-height:300px; display:grid; place-items:center; color:#666;">
-        <p>Tenant list & photo upload functionality will be implemented here</p>
-        <p style="font-size:0.95rem; margin-top:1rem;">(localStorage + base64 photos)</p>
-    </div>
-</div>
+      <!-- Add Tenant Button -->
+      <div class="mb-6">
+        <button id="addTenantBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 font-medium">
+          <i class="fas fa-plus"></i> Add New Tenant
+        </button>
+      </div>
 
-<!-- Simple Add Tenant Modal (photo upload included) -->
-<div id="addTenantModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:center; justify-content:center;">
-    <div class="card" style="width:90%; max-width:600px; max-height:90vh; overflow-y:auto;">
-        <div style="padding:1.5rem; border-bottom:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;">
-            <h2>Add New Tenant</h2>
-            <button onclick="document.getElementById('addTenantModal').style.display='none'" style="font-size:2rem; background:none; border:none; cursor:pointer;">×</button>
+      <!-- Tenants Table -->
+      <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-gray-800">
+              <tr>
+                <th class="px-6 py-4">PHOTO</th>
+                <th class="px-6 py-4">NAME</th>
+                <th class="px-6 py-4">EMAIL</th>
+                <th class="px-6 py-4">PHONE</th>
+                <th class="px-6 py-4">UNIT</th>
+                <th class="px-6 py-4">RENT (KES)</th>
+                <th class="px-6 py-4">STATUS</th>
+                <th class="px-6 py-4">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="tenantsTableBody">
+              <tr>
+                <td colspan="8" class="text-center py-12 text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <i class="fas fa-users text-4xl mb-3 text-gray-600"></i>
+                    <p id="loadingMessage">Loading tenants...</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <form style="padding:1.5rem;" onsubmit="alert('Saved (demo)'); document.getElementById('addTenantModal').style.display='none'; return false;">
-            <div class="photo-upload-box">
-                <label>Tenant Photo (optional)</label><br>
-                <input type="file" accept="image/*" onchange="previewPhoto(this, 'previewAdd')">
-                <img id="previewAdd" class="photo-preview" style="display:none;" alt="preview">
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Tenant Modal -->
+  <div id="tenantModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold">Add New Tenant</h3>
+        <button id="closeModalBtn" class="text-gray-400 hover:text-white">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="tenantForm">
+        <div class="space-y-4">
+          <!-- Photo Upload -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Tenant Photo (optional)</label>
+            <div class="flex items-center gap-4">
+              <div id="photoPreview" class="photo-preview">
+                <i class="fas fa-camera text-gray-500"></i>
+              </div>
+              <input type="file" id="tenantPhoto" accept="image/*" class="hidden">
+              <button type="button" id="choosePhotoBtn" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm">
+                Choose File
+              </button>
+              <span id="fileName" class="text-sm text-gray-400">No file chosen</span>
             </div>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                <div><label>Full Name</label><input type="text" required style="width:100%; padding:0.6rem;"></div>
-                <div><label>Unit</label><input type="text" required style="width:100%; padding:0.6rem;"></div>
-                <div><label>Phone</label><input type="tel" style="width:100%; padding:0.6rem;"></div>
-                <div><label>Monthly Rent (KES)</label><input type="number" required style="width:100%; padding:0.6rem;"></div>
-            </div>
-
-            <div style="margin:1.5rem 0; text-align:right;">
-                <button type="button" class="btn btn-secondary" onclick="document.getElementById('addTenantModal').style.display='none'">Cancel</button>
-                <button type="submit" class="btn btn-primary">Save Tenant</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>TEVIN VILLA</h4>
-            <p>Nairobi, Kenya</p>
+          </div>
+          
+          <!-- Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Full Name *</label>
+            <input type="text" id="tenantName" required class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+          </div>
+          
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Email *</label>
+            <input type="email" id="tenantEmail" required class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+          </div>
+          
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Phone *</label>
+            <input type="tel" id="tenantPhone" required class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+          </div>
+          
+          <!-- Unit -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Unit Number *</label>
+            <input type="text" id="tenantUnit" required value="A-001" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+          </div>
+          
+          <!-- Rent Amount -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Monthly Rent (KES) *</label>
+            <input type="number" id="tenantRent" required value="15000" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+          </div>
+          
+          <!-- Status -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Status</label>
+            <select id="tenantStatus" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-purple-500">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
         </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="payment.html">Payments</a>
-            <a href="tenants.html">Tenants</a>
-
+        
+        <div class="flex justify-end gap-3 mt-6">
+          <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded">Save Tenant</button>
         </div>
-        <div class="footer-section">
-            <h4>Contact</h4>
-            <p>+254 797 510 552</p>
-            <p>tevinmulinge48@gmail.com</p>
-        </div>
+      </form>
     </div>
-    <div class="footer-bottom">
-        <img src="images/TevinMulinge.jpg" alt="Tevin" class="developer-photo">
-        <p>© 2025 TEVIN VILLA Apartments. Developed by Tevin Mulinge</p>
-    </div>
-</footer>
+  </div>
 
-<script>
-function previewPhoto(input, previewId) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        const img = document.getElementById(previewId);
-        img.src = e.target.result;
-        img.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  // === Supabase connection - PASTE YOUR REAL VALUES HERE ===
-  const SUPABASE_URL = 'https://hpepaznisbxfqjwaocpa.supabase.co';  // ← your Project URL
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZXBhem5pc2J4ZnFqd2FvY3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NTQ4NjgsImV4cCI6MjA4NzUzMDg2OH0.DxvYkJ4YG_esK2_LNWqcfp0tiin3mloFXVLDqVczcZI';  // ← your FULL anon public key
-
-  const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  // Photo preview (keep this if you have it)
-  function previewPhoto(input, previewId) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.getElementById(previewId);
-      img.src = e.target.result;
-      img.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // Save new tenant to Supabase
-  async function saveTenant(event) {
-    event.preventDefault();
-    const form = event.target;
-
-    const tenantData = {
-      name: form.querySelector('[name="name"]').value.trim(),
-      email: form.querySelector('[name="email"]').value.trim(),
-      phone: form.querySelector('[name="phone"]').value.trim(),
-      unit: form.querySelector('[name="unit"]').value.trim(),
-      rent: Number(form.querySelector('[name="rent"]').value) || 0,
-      deposit: Number(form.querySelector('[name="deposit"]').value) || 0,
-      lease_start: form.querySelector('[name="leaseStart"]').value,
-      lease_end: form.querySelector('[name="leaseEnd"]').value,
-      status: 'Pending',
-      photo_url: null  // photo upload later
-    };
-
-    const { data, error } = await supabase
-      .from('tenants')
-      .insert([tenantData])
-      .select();
-
-    if (error) {
-      console.error('Save error:', error);
-      alert('Failed to save tenant: ' + error.message);
-      return;
-    }
-
-    alert('Tenant saved to cloud database!');
-    form.reset();
-    document.getElementById('photoPreviewAdd')?.style.display = 'none';
-    closeModal('addTenantModal');
-    loadTenants();  // refresh table
-  }
-
-  // Load and display tenants from Supabase
-  async function loadTenants() {
-    const { data, error } = await supabase
-      .from('tenants')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Load error:', error);
-      alert('Could not load tenants: ' + error.message);
-      return;
-    }
-
-    const tbody = document.getElementById('tenantsTableBody');
-    tbody.innerHTML = '';  // clear old rows
-
-    if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:3rem;">No tenants yet</td></tr>';
-      return;
-    }
-
-    data.forEach(t => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${t.name || '—'}</td>
-        <td>${t.email || '—'}</td>
-        <td>${t.phone || '—'}</td>
-        <td>${t.unit || '—'}</td>
-        <td>KES ${t.rent?.toLocaleString() || '0'}</td>
-        <td><span class="status-badge ${t.status?.toLowerCase() || ''}">${t.status || 'Pending'}</span></td>
-        <td>
-          <button onclick="viewTenant('${t.id}')">View</button>
-          <button onclick="editTenant('${t.id}')">Edit</button>
-          <button onclick="deleteTenant('${t.id}')">Delete</button>
-        </td>
-      `;
-      tbody.appendChild(row);
-    });
-
-    updateStats(data);  // update count cards
-  }
-
-  // Basic stats update (expand later)
-  function updateStats(tenants) {
-    document.getElementById('totalTenants').textContent = tenants.length;
-    document.getElementById('paidCount').textContent = tenants.filter(t => t.status === 'Paid').length;
-    document.getElementById('pendingCount').textContent = tenants.filter(t => t.status === 'Pending').length;
-    document.getElementById('lateCount').textContent = tenants.filter(t => t.status === 'Late').length;
-  }
-
-  // Attach save listener
-  document.getElementById('addTenantForm').addEventListener('submit', saveTenant);
-
-  // Load tenants when page opens
-  window.addEventListener('load', loadTenants);
-</script>
-
-
+  <!-- JavaScript -->
+  <script type="module" src="js/tenant.js"></script>
 </body>
 </html>

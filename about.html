@@ -1,114 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About TEVIN'S VILLA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tevin Villa - About</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-brand">TEVIN'S VILLA</div>
+  <nav class="navbar">
+    <div class="nav-brand">TEVIN VILLA</div>
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="tenants.html">Tenants</a></li>
+      <li><a href="payment.html">Payments</a></li>
+      <li><a href="help.html">Help</a></li>
+    </ul>
+  </nav>
 
-    <div class="navbar-right">
-        <!-- Your profile photo – top right -->
-        <img src="https://via.placeholder.com/44/6366f1/ffffff?text=TM" 
-             alt="Tevin Mulinge" class="profile-photo">
-
-        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
+  <main class="about-section">
+    <h1>About Tevin Villa</h1>
+    
+    <div class="about-card">
+      <h2>Our Story</h2>
+      <p>Tevin's Villa was born from a simple idea: property management shouldn't be complicated. Created by Tevin Mulinge, a developer who understands the challenges landlords face, our system streamlines tenant and payment management into one beautiful, intuitive platform.</p>
     </div>
 
-    <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="tenants.html">Tenants</a></li>
-        <li><a href="payment.html">Payments</a></li>
-        <li class="dropdown">
-            <a href="#">Help & Info</a>
-            <div class="dropdown-content">
-                <a href="about.html">About TEVIN'S VILLA</a>
-                <a href="#faq">Tenant FAQ</a>
-                <a href="#contact">Contact Us</a>
-                <a href="#visitors">Visitor Guide</a>
-            </div>
-        </li>
-    </ul>
-</nav>
+    <div class="about-card">
+      <h2>Meet the Developer</h2>
+      <div class="developer-profile">
+        <img src="images/TevinMulinge.jpg" alt="Tevin Mulinge" class="developer-photo">
+        <div>
+          <h3>Tevin's Mulinge</h3>
+          <p>Full Stack Developer & Property Manager</p>
+          <p>With years of experience in both software development and property management, Tevin created this system to solve real-world problems faced by landlords every day.</p>
+        </div>
+      </div>
+    </div>
 
-<div class="container" style="padding:6rem 1rem 4rem; color:white; max-width:900px; margin:auto;">
-    <h1 style="text-align:center;">About TEVIN'S VILLA</h1>
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+      <p><i class="fas fa-envelope"></i> tevinnmulinge48@gmail.com</p>
+      <p><i class="fas fa-phone"></i> 0797510552</p>
+      <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+    </div>
+  </main>
 
-    <p style="font-size:1.2rem; margin:2rem 0;">
-        TEVIN'S VILLA is a modern residential apartment complex located in Nairobi, designed for comfortable, secure and smart living.
-        Our mission is to provide high-quality housing paired with transparent and efficient property management.
-    </p>
-
-    <h2>Our Values</h2>
-    <ul style="font-size:1.15rem; margin:1.5rem 0 3rem 2rem;">
-        <li>Security & Privacy first</li>
-        <li>Reliable utilities and maintenance</li>
-        <li>Fair and clear rent processes</li>
-        <li>Quiet, clean and green environment</li>
-        <li>Respect for all residents</li>
-    </ul>
-
-    <h2 id="faq">Frequently Asked Questions – Tenants</h2>
-    <dl style="margin:2rem 0;">
-        <dt style="font-weight:600; margin:1.5rem 0 0.4rem;">When is rent due?</dt>
-        <dd>By the 5th of every month</dd>
-
-        <dt style="font-weight:600; margin:1.5rem 0 0.4rem;">How do I pay rent?</dt>
-        <dd>M-Pesa, bank transfer or cash at the office</dd>
-
-        <dt style="font-weight:600; margin:1.5rem 0 0.4rem;">What happens if rent is late?</dt>
-        <dd>Reminder after day 6, late fee after day 10</dd>
-
-        <dt style="font-weight:600; margin:1.5rem 0 0.4rem;">How to report maintenance issues?</dt>
-        <dd>Call/WhatsApp +254 797 510 552 or email tevinmulinge48@gmail.com</dd>
-    </dl>
-
-    <h2 id="contact">Contact Management</h2>
-    <p style="margin:1.5rem 0;">
-        <strong>Phone / WhatsApp:</strong> +254 797 510 552<br>
-        <strong>Email:</strong> tevinmulinge48@gmail.com<br>
-        <strong>Emergency (after hours):</strong> +254 797 510 552
-    </p>
-</div>
-
-<footer>
+  <footer>
     <div class="footer-content">
-        <div class="footer-section">
-            <h4>TEVIN'S VILLA</h4>
-            <p>Nairobi, Kenya</p>
-        </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="tenants.html">Tenants</a>
-        </div>
-        <div class="footer-section">
-            <h4>Contact</h4>
-            <p>+254 797 510 552</p>
-            <p>tevinmulinge48@gamil.com</p>
-        </div>
+      <div class="footer-section">
+        <h4>Tevin's Villa</h4>
+        <p>Modern property management solution for modern landlords.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <ul>
+          <li><i class="fas fa-envelope"></i> tevinnmulinge48.com</li>
+          <li><i class="fas fa-phone"></i> +254 797 510552</li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-        <img src="images/TevinMulinge.jpg" alt="Tevin" class="developer-photo">
-        <p>© 2025 TEVIN VILLA Apartments. Developed by Tevin Mulinge</p>
+      <p>&copy; <span class="current-year">2024</span> Tevin Villa. All rights reserved.</p>
     </div>
-</footer>
-<script>
-    // Mobile: click "Help & Info" to toggle dropdown
-    document.querySelectorAll('.dropdown > a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 992) {     // only on mobile/tablet
-                e.preventDefault();             // stop navigation
-                this.parentElement.classList.toggle('active');
-            }
-        });
-    });
-</script>
+  </footer>
 
+  <!-- Main JS for index, about, help pages -->
+  <script src="sript.js"></script>
 </body>
 </html>

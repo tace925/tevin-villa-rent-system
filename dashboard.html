@@ -1,95 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - TEVIN'S VILLA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tevin's Villa - Dashboard</title>
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  
+  <!-- Load Chart.js FIRST (important!) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
 
-<nav class="navbar">
-    <div class="nav-brand">TEVIN VILLA</div>
-    <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
-    <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html" class="active">Dashboard</a></li>
-        <li><a href="tenants.html">Tenants</a></li>
-        <li><a href="payment.html">Payments</a></li>
-        <li class="dropdown">
-            <a href="#">Help & Info</a>
-            <div class="dropdown-content">
-                <a href="about.html">About TEVIN'S VILLA</a>
-                <a href="#faq">Tenant FAQ</a>
-                <a href="#contact">Contact Us</a>
-                <a href="#visitors">Visitor Guide</a>
-            </div>
-        </li>
-    </ul>
-</nav>
+  <!-- Navbar -->
+  <nav class="bg-gray-950 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <div class="text-purple-500 font-bold text-xl">TEVIN'S VILLA</div>
+        </div>
+        <div class="flex space-x-8">
+          <a href="index.html" class="hover:text-purple-400">Home</a>
+          <a href="dashboard.html" class="text-purple-400 border-b-2 border-purple-500">Dashboard</a>
+          <a href="tenants.html" class="hover:text-purple-400">Tenants</a>
+          <a href="payment.html" class="hover:text-purple-400">Payments</a>
+          <a href="help.html" class="hover:text-purple-400">Help & Info</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-<div class="container" style="padding:4rem 1rem;">
-    <h1 style="color:white; text-align:center; margin-bottom:3rem;">Dashboard Overview</h1>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-bottom:4rem;">
-        <div class="card">
-            <h3>Total Revenue (This Month)</h3>
-            <p style="font-size:2.4rem; font-weight:700; color:var(--secondary);">KES 0</p>
-        </div>
-        <div class="card">
-            <h3>Active Tenants</h3>
-            <p style="font-size:2.4rem; font-weight:700; color:var(--primary);">0</p>
-        </div>
-        <div class="card">
-            <h3>Occupancy Rate</h3>
-            <p style="font-size:2.4rem; font-weight:700;">0%</p>
-        </div>
-        <div class="card">
-            <h3>Pending Payments</h3>
-            <p style="font-size:2.4rem; font-weight:700; color:var(--danger);">KES 0</p>
-        </div>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Welcome Section -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold">Dashboard</h1>
+      <p class="text-gray-400 mt-2">Welcome back! Here's an overview of your property.</p>
     </div>
 
-    <div style="text-align:center; color:white; font-size:1.3rem; opacity:0.9;">
-        <p>More detailed analytics coming soon…</p>
-        <p style="margin-top:1rem;">(Connect real data from tenants.html & payments.html)</p>
-    </div>
-</div>
+    <!-- Key Metrics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Total Tenants Card -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg dashboard-card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-gray-400 text-sm">Total Tenants</p>
+            <p class="text-3xl font-bold text-blue-400" id="totalTenants">0</p>
+          </div>
+          <div class="w-12 h-12 bg-blue-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-users text-blue-400 text-xl"></i>
+          </div>
+        </div>
+        <div class="text-sm text-gray-400">
+          <span id="activeTenants" class="text-green-400">0</span> Active · 
+          <span id="pendingTenants" class="text-yellow-400">0</span> Pending
+        </div>
+      </div>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>TEVIN VILLA</h4>
-            <p>Nairobi, Kenya</p>
+      <!-- Total Units Card -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg dashboard-card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-gray-400 text-sm">Total Units</p>
+            <p class="text-3xl font-bold text-purple-400" id="totalUnits">0</p>
+          </div>
+          <div class="w-12 h-12 bg-purple-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-building text-purple-400 text-xl"></i>
+          </div>
         </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="index.html">Home</a>
-            <a href="tenants.html">Tenants</a>
-            <a href="payment.html">Payments</a>
+        <div class="text-sm text-gray-400">
+          <span id="occupiedUnits" class="text-green-400">0</span> Occupied · 
+          <span id="vacantUnits" class="text-red-400">0</span> Vacant
         </div>
-        <div class="footer-section">
-            <h4>Contact</h4>
-            <p>+254 797 510 552</p>
-            <p>tevinmulinge48gmai.com</p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <img src="images/TevinMulinge.jpg" alt="Tevin" class="developer-photo">
-        <p>© 2025 TEVIN VILLA Apartments. Developed by Tevin Mulinge</p>
-    </div>
-</footer>
-<script>
-    // Mobile: click "Help & Info" to toggle dropdown
-    document.querySelectorAll('.dropdown > a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 992) {     // only on mobile/tablet
-                e.preventDefault();             // stop navigation
-                this.parentElement.classList.toggle('active');
-            }
-        });
-    });
-</script>
+      </div>
 
+      <!-- Monthly Revenue Card -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg dashboard-card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-gray-400 text-sm">Monthly Revenue</p>
+            <p class="text-3xl font-bold text-green-400" id="monthlyRevenue">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-money-bill-wave text-green-400 text-xl"></i>
+          </div>
+        </div>
+        <div class="text-sm text-gray-400">
+          <span id="collectedRevenue" class="text-green-400">KES 0</span> Collected
+        </div>
+      </div>
+
+      <!-- Outstanding Balance Card -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg dashboard-card">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-gray-400 text-sm">Outstanding</p>
+            <p class="text-3xl font-bold text-yellow-400" id="outstandingBalance">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-yellow-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-clock text-yellow-400 text-xl"></i>
+          </div>
+        </div>
+        <div class="text-sm text-gray-400">
+          <span id="overdueCount" class="text-red-400">0</span> Overdue payments
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Payment Status Chart -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Payment Status</h2>
+        <div class="chart-container" style="height: 250px;">
+          <canvas id="paymentStatusChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Monthly Collection Chart -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Monthly Collections</h2>
+        <div class="chart-container" style="height: 250px;">
+          <canvas id="monthlyCollectionChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Tables -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Recent Payments -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Recent Payments</h2>
+          <a href="payment.html" class="text-purple-400 hover:text-purple-300 text-sm">View All →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full dashboard-table">
+            <thead class="bg-gray-700">
+              <tr>
+                <th class="px-4 py-2 text-left text-sm">Tenant</th>
+                <th class="px-4 py-2 text-left text-sm">Amount</th>
+                <th class="px-4 py-2 text-left text-sm">Date</th>
+                <th class="px-4 py-2 text-left text-sm">Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentPaymentsTable">
+              <tr>
+                <td colspan="4" class="text-center py-4 text-gray-500">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Tenants -->
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Recent Tenants</h2>
+          <a href="tenants.html" class="text-purple-400 hover:text-purple-300 text-sm">View All →</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full dashboard-table">
+            <thead class="bg-gray-700">
+              <tr>
+                <th class="px-4 py-2 text-left text-sm">Name</th>
+                <th class="px-4 py-2 text-left text-sm">Unit</th>
+                <th class="px-4 py-2 text-left text-sm">Rent</th>
+                <th class="px-4 py-2 text-left text-sm">Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentTenantsTable">
+              <tr>
+                <td colspan="4" class="text-center py-4 text-gray-500">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="mt-8 bg-gray-800 rounded-lg p-6 shadow-lg">
+      <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+      <div class="flex flex-wrap gap-4">
+        <a href="tenants.html" class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg flex items-center gap-2 quick-action-btn">
+          <i class="fas fa-user-plus"></i> Add Tenant
+        </a>
+        <a href="payment.html" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg flex items-center gap-2 quick-action-btn">
+          <i class="fas fa-money-bill"></i> Record Payment
+        </a>
+        <button onclick="refreshDashboard()" class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg flex items-center gap-2 quick-action-btn">
+          <i class="fas fa-sync-alt"></i> Refresh Data
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Load dashboard.js AFTER Chart.js -->
+  <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>

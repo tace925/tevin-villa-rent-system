@@ -1,146 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payments - TEVIN VILLA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tevin's Villa - Payments</title>
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="payment.css">
 </head>
-<body>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
 
-<!-- ─── Navbar (same as other pages, with your photo top-right) ─── -->
-<nav class="navbar">
-    <div class="nav-brand">TEVIN VILLA</div>
+  <!-- Navbar -->
+  <nav class="bg-gray-950 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <div class="text-purple-500 font-bold text-xl">TEVIN'S VILLA</div>
+        </div>
+        <div class="flex space-x-8">
+          <a href="index.html" class="hover:text-purple-400">Home</a>
+          <a href="dashboard.html" class="hover:text-purple-400">Dashboard</a>
+          <a href="tenants.html" class="hover:text-purple-400">Tenants</a>
+          <a href="payment.html" class="text-purple-400 border-b-2 border-purple-500">Payments</a>
+          <a href="about.html" class="hover:text-purple-400">Help & Info</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-    <div class="navbar-right">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg summary-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm">Total Collected</p>
+            <p class="text-2xl font-bold text-green-400" id="totalCollected">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-green-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-money-bill-wave text-green-400 text-xl"></i>
+          </div>
+        </div>
+      </div>
 
-        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg summary-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm">Expected Rent</p>
+            <p class="text-2xl font-bold text-blue-400" id="expectedRent">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-blue-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-calculator text-blue-400 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg summary-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm">Outstanding</p>
+            <p class="text-2xl font-bold text-yellow-400" id="outstanding">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-yellow-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-clock text-yellow-400 text-xl"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800 rounded-lg p-6 shadow-lg summary-card">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-400 text-sm">This Month</p>
+            <p class="text-2xl font-bold text-purple-400" id="thisMonth">KES 0</p>
+          </div>
+          <div class="w-12 h-12 bg-purple-900/30 rounded-full flex items-center justify-center">
+            <i class="fas fa-calendar text-purple-400 text-xl"></i>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="tenants.html">Tenants</a></li>
-        <li><a href="payments.html" class="active">Payments</a></li>  <!-- ← this is the connection -->
-        <li class="dropdown">
-            <a href="#">Help & Info</a>
-            <div class="dropdown-content">
-                <a href="about.html">About TEVIN VILLA</a>
-                <a href="#faq">Tenant FAQ</a>
-                <a href="#contact">Contact Us</a>
-                <a href="#visitors">Visitor Guide</a>
-            </div>
-        </li>
-    </ul>
-</nav>
-
-<!-- ─── Main content ────────────────────────────────────────────── -->
-<main class="container" style="padding: 2.5rem 1rem 4rem;">
-
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem;">
-        <h1 style="color: white;">Payment Records</h1>
-        <button class="btn btn-primary">+ Record New Payment</button>
-    </div>
-
-    <!-- Quick summary cards -->
-    <div class="summary-grid">
-        <div class="card">
-            <div class="card-label">Total Collected</div>
-            <div class="card-value">KES 0</div>
+    <!-- Main Content -->
+    <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold">Payment Management</h2>
+        <div class="flex gap-3">
+          <button id="refreshBtn" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm flex items-center gap-2 btn-hover-effect">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+          <button id="recordPaymentBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded text-sm flex items-center gap-2 btn-hover-effect">
+            <i class="fas fa-plus"></i> Record Payment
+          </button>
         </div>
-        <div class="card">
-            <div class="card-label">This Month</div>
-            <div class="card-value">KES 0</div>
-        </div>
-        <div class="card">
-            <div class="card-label">Pending</div>
-            <div class="card-value danger">KES 0</div>
-        </div>
-        <div class="card">
-            <div class="card-label">Transactions</div>
-            <div class="card-value">0</div>
-        </div>
-    </div>
+      </div>
 
-    <!-- Filters -->
-    <div class="filter-bar" style="margin: 2.5rem 0;">
-        <input type="text" placeholder="Search tenant or reference..." style="flex: 1; min-width: 220px;">
-        <input type="date" placeholder="From">
-        <input type="date" placeholder="To">
-        <select>
-            <option>All Methods</option>
-            <option>M-Pesa</option>
-            <option>Bank Transfer</option>
-            <option>Cash</option>
+      <!-- Filters -->
+      <div class="filter-section">
+        <select id="statusFilter" class="filter-select">
+          <option value="all">All Status</option>
+          <option value="paid">Paid</option>
+          <option value="pending">Pending</option>
+          <option value="overdue">Overdue</option>
         </select>
-        <button class="btn btn-secondary">Filter</button>
-    </div>
 
-    <!-- Payments table -->
-    <div class="card" style="overflow-x: auto;">
-        <table class="data-table">
+        <select id="monthFilter" class="filter-select">
+          <option value="all">All Months</option>
+          <option value="2024-01">January 2024</option>
+          <option value="2024-02">February 2024</option>
+          <option value="2024-03">March 2024</option>
+        </select>
+
+        <div class="flex-1">
+          <input type="text" id="searchInput" placeholder="Search by tenant or unit..." 
+                 class="search-input">
+        </div>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="bg-gray-900 rounded-lg overflow-hidden border border-gray-700">
+        <div class="overflow-x-auto">
+          <table class="payments-table">
             <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Tenant</th>
-                    <th>Amount</th>
-                    <th>Method</th>
-                    <th>Reference</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
+              <tr>
+                <th>TENANT</th>
+                <th>UNIT</th>
+                <th>MONTH</th>
+                <th>AMOUNT</th>
+                <th>PAID DATE</th>
+                <th>METHOD</th>
+                <th>STATUS</th>
+                <th>RECEIPT</th>
+                <th>ACTIONS</th>
+              </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td colspan="7" style="text-align: center; padding: 3rem; color: #64748b;">
-                        No payments recorded yet.<br>
-                        Click "+ Record New Payment" to begin.
-                    </td>
-                </tr>
+            <tbody id="paymentsTableBody">
+              <tr>
+                <td colspan="9" class="text-center py-12 text-gray-500">
+                  <div class="empty-state">
+                    <i class="fas fa-credit-card"></i>
+                    <p id="loadingMessage">Loading payments from Firebase...</p>
+                  </div>
+                </td>
+              </tr>
             </tbody>
-        </table>
-    </div>
-
-</main>
-
-<!-- ─── Footer ───────────────────────────────────────────────────── -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>TEVIN VILLA</h4>
-            <p>Modern living • Smart rent management</p>
-            <p>Nairobi, Kenya</p>
+          </table>
         </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="tenants.html">Tenants</a>
-            <a href="about.html">About</a>
-        </div>
-        <div class="footer-section">
-            <h4>Contact</h4>
-            <p>+254 797 510 </p>
-            <p>tevinmulinge48@gmail.com</p>
-        </div>
+      </div>
     </div>
-    <div class="footer-bottom">
-        <img src="images/TevinMulinge.jpg"
-             alt="Tevin Mulinge" class="developer-photo">
-        <p>© 2025 TEVIN VILLA Apartments. Developed by Tevin Mulinge</p>
-    </div>
-</footer>
-<script>
-    // Mobile: click "Help & Info" to toggle dropdown
-    document.querySelectorAll('.dropdown > a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth <= 992) {     // only on mobile/tablet
-                e.preventDefault();             // stop navigation
-                this.parentElement.classList.toggle('active');
-            }
-        });
-    });
-</script>
+  </main>
 
+  <!-- Record Payment Modal -->
+  <div id="paymentModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold">Record New Payment</h3>
+        <button id="closeModalBtn" class="text-gray-400 hover:text-white">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <form id="paymentForm">
+        <div class="space-y-4">
+          <!-- Tenant Selection -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Select Tenant *</label>
+            <select id="paymentTenant" required class="form-input">
+              <option value="">Choose tenant...</option>
+            </select>
+          </div>
+          
+          <!-- Month -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Payment Month *</label>
+            <input type="month" id="paymentMonth" required class="form-input">
+          </div>
+          
+          <!-- Amount -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Amount (KES) *</label>
+            <input type="number" id="paymentAmount" required min="1" step="100" class="form-input">
+          </div>
+          
+          <!-- Payment Method -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Payment Method *</label>
+            <select id="paymentMethod" required class="form-input">
+              <option value="">Select method...</option>
+              <option value="cash">Cash</option>
+              <option value="mpesa">M-PESA</option>
+              <option value="bank">Bank Transfer</option>
+              <option value="cheque">Cheque</option>
+            </select>
+          </div>
+          
+          <!-- Transaction Reference -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Transaction Reference (Optional)</label>
+            <input type="text" id="paymentReference" placeholder="M-PESA code / Cheque number" class="form-input">
+          </div>
+          
+          <!-- Receipt Upload -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Upload Receipt (Optional)</label>
+            <div class="flex items-center gap-4">
+              <div id="receiptPreview" class="receipt-preview">
+                <i class="fas fa-file-pdf text-gray-500"></i>
+              </div>
+              <input type="file" id="paymentReceipt" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+              <button type="button" id="chooseReceiptBtn" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm">
+                Choose File
+              </button>
+              <span id="receiptFileName" class="text-sm text-gray-400">No file chosen</span>
+            </div>
+          </div>
+          
+          <!-- Notes -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Notes (Optional)</label>
+            <textarea id="paymentNotes" rows="2" class="form-input"></textarea>
+          </div>
+        </div>
+        
+        <div class="flex justify-end gap-3 mt-6">
+          <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded">Record Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Receipt Modal -->
+  <div id="receiptModal" class="modal hidden">
+    <div class="modal-content max-w-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-semibold">Payment Receipt</h3>
+        <button id="closeReceiptModalBtn" class="text-gray-400 hover:text-white">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="receiptContent" class="bg-gray-700 p-6 rounded-lg">
+        <!-- Receipt content will be dynamically inserted here -->
+      </div>
+      <div class="flex justify-end gap-3 mt-4">
+        <button id="downloadReceiptBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded flex items-center gap-2">
+          <i class="fas fa-download"></i> Download
+        </button>
+        <button id="printReceiptBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded flex items-center gap-2">
+          <i class="fas fa-print"></i> Print
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript - Make sure this path is correct -->
+  <script type="module" src="js/payment.js"></script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Test</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCyLApPHELtMZlvW3sIaqEHqCTds3jPVHo",
+            authDomain: "tevin-villa-system.firebaseapp.com",
+            projectId: "tevin-villa-system",
+            storageBucket: "tevin-villa-system.firebasestorage.app",
+            messagingSenderId: "172735256047",
+            appId: "1:172735256047:web:70ec19ad5239d136d2d21a"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        console.log('🔥 Testing Firebase...');
+        
+        async function testFirebase() {
+            try {
+                const snapshot = await getDocs(collection(db, "tenants"));
+                console.log(`✅ Success! Found ${snapshot.size} tenants`);
+                snapshot.forEach(doc => {
+                    console.log('📄', doc.id, '→', doc.data());
+                });
+                document.body.innerHTML = `<h1 style="color:green">✅ Firebase Connected! Found ${snapshot.size} tenants</h1>`;
+            } catch (error) {
+                console.error('❌ Failed:', error);
+                document.body.innerHTML = `<h1 style="color:red">❌ Firebase Error: ${error.message}</h1>`;
+            }
+        }
+        
+        testFirebase();
+    </script>
+</head>
+<body>
+    <h2>Testing Firebase Connection...</h2>
+</body>
+</html>
